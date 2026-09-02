@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables - YEH KABHI PUBLISH NAHI HONI CHAHIYE (secrets, API keys hain isme)
+.env
+
+# Logs
+npm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
