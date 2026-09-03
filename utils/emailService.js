@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 // User-supplied text (fullName, userId, etc.) ko HTML me daalne se pehle escape karo -
 // taaki koi HTML/script tags wala naam email template ko break na kar sake
@@ -12,42 +12,27 @@ const escapeHtml = (text) => {
     .replace(/'/g, "&#039;");
 };
 
-// Transporter ko "lazy" banaya hai - matlab yeh tabhi banega jab pehli baar
+// Brevo client ko "lazy" banaya hai - matlab yeh tabhi banega jab pehli baar
 // email bhejni ho, module load hote hi nahi. Isse yeh guarantee milta hai ki
 // .env file pehle se load ho chuki hogi (dotenv.config() server.js me sabse
-// upar chalta hai) - warna agar transporter top-level par ban jaye aur .env
-// abhi load na hua ho, EMAIL_HOST/USER/PASS hamesha ke liye undefined reh
-// jayenge aur koi bhi email kabhi nahi jayegi, chahe .env sahi bhara ho.
-let cachedTransporter = null;
+// upar chalta hai).
+let cachedApiInstance = null;
 
-const getTransporter = () => {
-  if (cachedTransporter) return cachedTransporter;
+const getApiInstance = () => {
+  if (cachedApiInstance) return cachedApiInstance;
 
-  // Zaroori .env variables check karo - agar missing hain, turant clear error do
-  // (generic "email fail" dekhne ke bajaye exact wajah pata chale)
-  const required = ["EMAIL_HOST", "EMAIL_PORT", "EMAIL_USER", "EMAIL_PASS", "EMAIL_FROM"];
+  const required = ["BREVO_API_KEY", "EMAIL_FROM"];
   const missing = required.filter((key) => !process.env[key]);
   if (missing.length > 0) {
     throw new Error(`Email is not configured. Missing .env values: ${missing.join(", ")}`);
   }
 
-  cachedTransporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: Number(process.env.EMAIL_PORT) === 465,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-    // PERFORMANCE: 8 second timeout - agar SMTP itni der me bhi respond na kare,
-    // aage try karna user ko lambi wait karwana hoga (worst case: 2 attempts x 8s = 16s
-    // max, jo already bahut hai). Zyadatar successful SMTP connections 1-2 second me
-    // hi ho jate hain - yeh timeout sirf genuinely-hung connections ke liye hai.
-    connectionTimeout: 8000,
-    socketTimeout: 8000,
-  });
+  const defaultClient = SibApiV3Sdk.ApiClient.instance;
+  const apiKey = defaultClient.authentications["api-key"];
+  apiKey.apiKey = process.env.BREVO_API_KEY;
 
-  return cachedTransporter;
+  cachedApiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+  return cachedApiInstance;
 };
 
 // Common wrapper - har email isi style me dikhega (ek professional, polished template)
@@ -78,27 +63,27 @@ const detailRow = (label, value, highlight = false) => `
   </tr>
 `;
 
-// Email bhejne ki koshish karta hai, agar transient network/SMTP glitch ki wajah se fail ho
-// (jaise Gmail ka temporary throttle, connection drop), toh 1 baar dobara try karta hai
-// chhoti si delay ke sath. Isse genuine temporary failures apne aap resolve ho jaate hain,
-// bina user ko bahut lambi wait karwaye (max ~1 second extra delay + timeout).
+// Email bhejne ki koshish karta hai, agar transient network glitch ki wajah se fail ho,
+// toh 1 baar dobara try karta hai chhoti si delay ke sath.
 const sendMail = async (to, subject, html, attempt = 1) => {
-  const transporter = getTransporter();
+  const apiInstance = getApiInstance();
+
+  const sendSmtpEmail = {
+    sender: { email: process.env.EMAIL_FROM, name: "ChatLeaf" },
+    to: [{ email: to }],
+    subject,
+    htmlContent: html,
+  };
+
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to,
-      subject,
-      html,
-    });
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
   } catch (error) {
-    const maxAttempts = 2; // 1 original + 1 retry - genuinely-down SMTP ko baar-baar try karke user ko wait na karwao
+    const maxAttempts = 2; // 1 original + 1 retry
     if (attempt < maxAttempts) {
       console.error(`Email send attempt ${attempt} failed (${error.message}). Retrying...`);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second wait, phir ek hi retry
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return sendMail(to, subject, html, attempt + 1);
     }
-    // Sab attempts fail ho gaye - ab error upar controller tak jaayega
     throw error;
   }
 };
@@ -175,11 +160,7 @@ const sendPasswordResetEmail = async (toEmail, fullName, newPlainPassword) => {
   await sendMail(toEmail, "ChatLeaf - Your New Password", html);
 };
 
-// ---------------- PROFILE PASSWORD RESET LINK (Settings me "current password bhool gaya") ----------------
-// Yeh sendPasswordResetEmail se ALAG hai - yeh LOGIN flow ke liye nahi hai, balki
-// already-logged-in user ke Settings/Profile page ke liye hai jab unhe apna CURRENT
-// password yaad nahi lekin naya set karna hai. Isme password nahi bheja jata - ek
-// SECURE LINK bheja jata hai jo web par ek password-set form kholta hai.
+// ---------------- PROFILE PASSWORD RESET LINK ----------------
 const sendPasswordResetLinkEmail = async (toEmail, fullName, resetUrl) => {
   const html = wrapTemplate(
     "Reset Your Password",
