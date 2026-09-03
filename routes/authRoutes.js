@@ -59,7 +59,7 @@ router.post("/logout", protect, logout);
 router.patch("/profile/user-id", protect, updateUserId);
 router.patch("/profile/password", protect, changePassword); // current password se khud change karna
 router.patch("/profile", protect, updateProfile); // "fullName" aur "about" text update
-router.post("/profile/picture", protect, handleUpload, uploadProfilePicture); // profile photo -> Cloudinary
+router.patch("/profile/picture", protect, handleUpload, uploadProfilePicture); // profile photo -> Cloudinary
 
 // ----- PROFILE "FORGOT PASSWORD" (Settings - current password yaad nahi, LINK-based, session change nahi hota) -----
 router.post("/profile/password/request-reset-link", protect, authLimiter, requestPasswordResetLink);

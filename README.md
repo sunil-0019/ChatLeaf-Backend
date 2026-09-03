@@ -150,7 +150,7 @@ Body: { "fullName": "Sunil Kumar Pal", "about": "Living my best life" }
 → "fullName" aur "about" dono ya inme se koi ek bhej sakte ho. Koi email nahi jati
   (jaisa maanga gaya tha — sirf userId/password change email bhejte hain)
 
-POST /api/auth/profile/picture
+PATCH /api/auth/profile/picture
 Header: Authorization: Bearer <accessToken>
 Body: multipart/form-data, field name "profileImage" (ek image file - JPG/PNG/WEBP, max 5MB)
 → Image Cloudinary par upload hoti hai, MongoDB me sirf Cloudinary ka URL (chhota string)
