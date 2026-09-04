@@ -4,24 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us — ChatLeaf</title>
+  <meta name="description" content="Reach the ChatLeaf team for account help, bug reports, or general feedback.">
+  <link rel="icon" href="/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="navbar">
     <a href="/" class="logo">
-      <span class="logo-icon"><img src="/logo.png" alt="ChatLeaf logo"></span> ChatLeaf
+      <img src="/logo.png" alt="ChatLeaf" class="logo-icon">
+      ChatLeaf
     </a>
-    <nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <nav id="site-nav">
       <a href="/app-info.html">App Info</a>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
-      <a href="/contact.html">Contact</a>
+      <a href="/contact.html" class="active">Contact</a>
     </nav>
   </div>
 
+  <main>
   <div class="container">
+    <span class="eyebrow">Support</span>
     <h1>Contact Us</h1>
-    <p class="subtitle">Have a question, feedback, or need help? Reach out — we'd love to hear from you.</p>
+    <p class="subtitle">Have a question about your account, found a bug, or just want to share feedback? Reach
+    out — we read every message and we'd love to hear from you.</p>
 
     <div class="card">
       <h2 style="margin-top:0;">Contact Information</h2>
@@ -37,6 +50,8 @@
 
     <div class="card">
       <h2 style="margin-top:0;">Send Us a Message</h2>
+      <p>Whether it's help recovering your account, a bug in a chat or group, or something you'd like to see in
+      a future update, tell us below and we'll get back to you at the email you provide.</p>
       <div id="form-message" class="message-banner"></div>
       <form id="contact-form">
         <div class="form-group">
@@ -54,19 +69,70 @@
         <button type="submit" class="btn" id="submit-btn">Send Message</button>
       </form>
     </div>
+
+    <div class="card faq">
+      <h2 style="margin-top:0;">Before you write in</h2>
+      <details>
+        <summary>I forgot my password</summary>
+        <p>Use "Forgot Password" from the ChatLeaf login screen — it sends a one-time reset link to your
+        registered email, valid for 5 minutes.</p>
+      </details>
+      <details>
+        <summary>I want to report abuse in a chat or group</summary>
+        <p>Include the User ID or group name involved along with a short description, and we'll look into it as
+        a priority.</p>
+      </details>
+      <details>
+        <summary>I want my account deleted</summary>
+        <p>Send us a message from this page and we'll confirm the details before permanently removing your
+        account and data.</p>
+      </details>
+    </div>
   </div>
+  </main>
 
   <div class="footer">
-    <div class="footer-links">
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms &amp; Conditions</a>
-      <a href="/contact.html">Contact Us</a>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">
+          <img src="/logo.png" alt="ChatLeaf">
+          ChatLeaf
+        </div>
+        <p>A simple, private, and secure chat app for Android — one-on-one chats, groups, and Status, built with
+        your privacy in mind.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Product</h3>
+        <a href="/">Home</a>
+        <a href="/app-info.html">App Info</a>
+      </div>
+      <div class="footer-col">
+        <h3>Legal</h3>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div class="footer-col">
+        <h3>Support</h3>
+        <a href="/contact.html">Contact Us</a>
+      </div>
     </div>
-    <p>© 2026 ChatLeaf. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p>© 2026 ChatLeaf. All rights reserved.</p>
+    </div>
   </div>
 
   <script>
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var nav = document.getElementById('site-nav');
+      if (!toggle || !nav) return;
+      toggle.addEventListener('click', function () {
+        var isOpen = nav.classList.toggle('open');
+        toggle.classList.toggle('active', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    })();
+
     const form = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const messageBox = document.getElementById('form-message');

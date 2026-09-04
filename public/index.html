@@ -4,14 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChatLeaf — Simple. Private. Secure.</title>
+  <meta name="description" content="ChatLeaf is a simple, private, and secure Android chat app with one-on-one chat, group chats, and Status updates.">
+  <link rel="icon" href="/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="navbar">
     <a href="/" class="logo">
-      <span class="logo-icon"><img src="/logo.png" alt="ChatLeaf logo"></span> ChatLeaf
+      <img src="/logo.png" alt="ChatLeaf" class="logo-icon">
+      ChatLeaf
     </a>
-    <nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <nav id="site-nav">
       <a href="/app-info.html">App Info</a>
       <a href="/privacy.html">Privacy</a>
       <a href="/terms.html">Terms</a>
@@ -19,34 +29,104 @@
     </nav>
   </div>
 
-  <div class="container">
-    <h1>ChatLeaf</h1>
-    <p class="subtitle">Simple. Private. Secure. — A modern chat app built for real conversations.</p>
+  <main>
+  <div class="container container--wide">
+    <span class="eyebrow">Available for Android</span>
+    <h1>Chat, groups and Status — without the clutter</h1>
+    <p class="subtitle">ChatLeaf keeps messaging simple: real-time one-on-one chats, group conversations with the
+    people who matter, and Status updates you can share with your contacts. No voice or video calls, no
+    noise — just a fast, private, focused place to talk.</p>
 
-    <div class="card">
-      <h2 style="margin-top:0;">About This Website</h2>
-      <p>This site provides information about the ChatLeaf mobile app, including our
-      Privacy Policy, Terms &amp; Conditions, and ways to contact us. ChatLeaf itself
-      is available as an Android app — sign up and login happen inside the app, not here.</p>
+    <div class="hero-actions">
+      <a href="/app-info.html" class="btn btn-inline">See App Info</a>
+      <a href="/contact.html" class="btn btn-inline btn-outline">Get in Touch</a>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>One-on-one chat</h3>
+        <p>Fast, reliable text messaging with anyone on ChatLeaf, found by their unique User ID.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Group chats</h3>
+        <p>Create groups for family, friends, or teams and keep everyone in one conversation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🟢</div>
+        <h3>Status updates</h3>
+        <p>Share a quick photo or text update that your contacts can see, the way you'd share a story.</p>
+      </div>
     </div>
 
     <div class="card">
-      <h2 style="margin-top:0;">Quick Links</h2>
+      <h2 style="margin-top:0;">Why people choose ChatLeaf</h2>
+      <p>ChatLeaf is built around messaging done well, rather than a long list of features nobody uses. Sign-up
+      and login are protected with one-time passcodes (OTP), passwords are hashed and never stored in plain
+      text, and we alert you whenever your account is opened from a new device. There's no voice or video
+      calling in ChatLeaf by design — the app stays focused on chat, groups, and Status, so it's lighter,
+      simpler, and easier to trust.</p>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">About this website</h2>
+      <p>This site is the public home for the ChatLeaf mobile app — it covers what the app does, our Privacy
+      Policy, our Terms &amp; Conditions, and how to reach us. Signing up, logging in, and chatting all happen
+      inside the ChatLeaf Android app itself, not on this website.</p>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Quick links</h2>
       <p>📄 <a href="/app-info.html">Learn more about the app</a></p>
       <p>🔒 <a href="/privacy.html">Read our Privacy Policy</a></p>
       <p>📜 <a href="/terms.html">Read our Terms &amp; Conditions</a></p>
       <p>✉️ <a href="/contact.html">Get in touch with us</a></p>
     </div>
   </div>
+  </main>
 
   <div class="footer">
-    <div class="footer-links">
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms &amp; Conditions</a>
-      <a href="/contact.html">Contact Us</a>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">
+          <img src="/logo.png" alt="ChatLeaf">
+          ChatLeaf
+        </div>
+        <p>A simple, private, and secure chat app for Android — one-on-one chats, groups, and Status, built with
+        your privacy in mind.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Product</h3>
+        <a href="/">Home</a>
+        <a href="/app-info.html">App Info</a>
+      </div>
+      <div class="footer-col">
+        <h3>Legal</h3>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div class="footer-col">
+        <h3>Support</h3>
+        <a href="/contact.html">Contact Us</a>
+      </div>
     </div>
-    <p>© 2026 ChatLeaf. All rights reserved.</p>
+    <div class="footer-bottom">
+      <p>© 2026 ChatLeaf. All rights reserved.</p>
+    </div>
   </div>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var nav = document.getElementById('site-nav');
+      if (!toggle || !nav) return;
+      toggle.addEventListener('click', function () {
+        var isOpen = nav.classList.toggle('open');
+        toggle.classList.toggle('active', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    })();
+  </script>
 </body>
 </html>
