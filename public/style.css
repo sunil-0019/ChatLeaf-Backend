@@ -1,37 +1,61 @@
+/* ChatLeaf — site stylesheet
+   IDs and class names are unchanged from the previous build so the
+   existing HTML/JS keep working without edits. */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --primary: #4C5BFF;
-  --primary-dark: #3a47cc;
-  --secondary: #7A5CFA;
-  --text-dark: #1a1a2e;
-  --text-muted: #6b7280;
-  --bg-light: #f7f8fc;
-  --border: #eef0f5;
-  --success: #22C55E;
-  --error: #EF4444;
+  --primary: #0F6B4C;
+  --primary-dark: #0B4F38;
+  --secondary: #1B8A5A;
+  --leaf: #4CC373;
+  --ink: #12181A;
+  --text-dark: #12181A;
+  --text-muted: #5B6B63;
+  --bg-light: #FFFFFF;
+  --bg-panel: #F5FAF6;
+  --border: #E1EBE3;
+  --success: #1B8A5A;
+  --error: #C1442E;
+  --error-bg: #FCEFEC;
+  --success-bg: #EEF8F1;
 }
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-  background: var(--bg-light);
-  color: var(--text-dark);
-  line-height: 1.6;
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  color: var(--ink);
+}
+
+/* ---------- Navbar ---------- */
+
 .navbar {
-  background: #ffffff;
   border-bottom: 1px solid var(--border);
-  padding: 16px 24px;
+  padding: 14px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 10;
+  backdrop-filter: saturate(180%) blur(6px);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .navbar .logo {
@@ -39,92 +63,147 @@ body {
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 20px;
-  color: var(--text-dark);
+  font-size: 19px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--ink);
   text-decoration: none;
+  letter-spacing: -0.01em;
 }
 
 .navbar .logo-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  display: flex;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 18px;
+}
+
+.navbar .logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.navbar nav {
+  display: flex;
+  align-items: center;
 }
 
 .navbar nav a {
   color: var(--text-muted);
   text-decoration: none;
-  margin-left: 24px;
+  margin-left: 28px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.15s ease;
 }
 
 .navbar nav a:hover {
   color: var(--primary);
 }
 
+/* ---------- Layout ---------- */
+
 .container {
-  max-width: 780px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: 56px 24px 96px;
 }
 
 h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 20px;
-  margin-top: 36px;
-  margin-bottom: 12px;
-  color: var(--text-dark);
+  font-size: 19px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
 }
 
 p, li {
-  color: #3a3f4b;
-  font-size: 15px;
+  color: #37423C;
+  font-size: 15.5px;
+}
+
+ul {
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 6px;
 }
 
 .subtitle {
   color: var(--text-muted);
-  font-size: 15px;
-  margin-bottom: 32px;
+  font-size: 15.5px;
+  margin-bottom: 36px;
 }
+
+a {
+  color: var(--primary);
+}
+
+/* ---------- Cards ---------- */
 
 .card {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 20px;
+  border-radius: 14px;
+  padding: 30px 32px;
+  margin-bottom: 18px;
 }
+
+.card h2 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h2 + p,
+.card h2 + ul {
+  margin-top: 14px;
+}
+
+/* ---------- Buttons ---------- */
 
 .btn {
   display: inline-block;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: var(--primary);
   color: #ffffff;
   border: none;
-  padding: 14px 28px;
+  padding: 13px 28px;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   width: 100%;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
+
+/* ---------- Forms ---------- */
 
 .form-group {
   margin-bottom: 18px;
@@ -142,11 +221,18 @@ p, li {
 .form-group textarea {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid #dde1ea;
+  border: 1px solid #D7E3DA;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 14.5px;
   font-family: inherit;
-  background: #fbfbfe;
+  background: var(--bg-panel);
+  color: var(--ink);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #93A199;
 }
 
 .form-group input:focus,
@@ -154,11 +240,12 @@ p, li {
   outline: none;
   border-color: var(--primary);
   background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(15, 107, 76, 0.12);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 110px;
 }
 
 .message-banner {
@@ -170,33 +257,36 @@ p, li {
 }
 
 .message-banner.success {
-  background: #ecfdf5;
-  color: #067647;
-  border: 1px solid #a7f3d0;
+  background: var(--success-bg);
+  color: #0E5A38;
+  border: 1px solid #BEE3CC;
   display: block;
 }
 
 .message-banner.error {
-  background: #fef2f2;
-  color: #b42318;
-  border: 1px solid #fecaca;
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid #F1C3B8;
   display: block;
 }
 
+/* ---------- Footer ---------- */
+
 .footer {
   border-top: 1px solid var(--border);
-  padding: 32px 24px;
+  padding: 36px 24px;
   text-align: center;
   color: var(--text-muted);
   font-size: 13px;
-  background: #ffffff;
-  margin-top: 40px;
+  background: var(--bg-panel);
+  margin-top: 48px;
 }
 
 .footer a {
   color: var(--text-muted);
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 12px;
+  font-weight: 500;
 }
 
 .footer a:hover {
@@ -204,22 +294,28 @@ p, li {
 }
 
 .footer .footer-links {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
+
+/* ---------- Contact page ---------- */
 
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: 20px 0;
+  gap: 12px;
+  margin: 18px 0 22px;
 }
 
 .contact-info .row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 14.5px;
   color: var(--text-dark);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 10px;
 }
 
 .contact-info .icon {
@@ -227,16 +323,18 @@ p, li {
   text-align: center;
 }
 
+/* ---------- Reset-password states ---------- */
+
 .center-box {
-  max-width: 440px;
-  margin: 60px auto;
+  max-width: 420px;
+  margin: 64px auto;
   text-align: center;
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255,255,255,0.4);
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
   border-top-color: #ffffff;
   border-radius: 50%;
   display: inline-block;
@@ -249,6 +347,48 @@ p, li {
 }
 
 .status-icon {
-  font-size: 48px;
+  font-size: 44px;
   margin-bottom: 12px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .navbar nav a {
+    margin-left: 0;
+    margin-right: 18px;
+    font-size: 13.5px;
+  }
+
+  .container {
+    padding: 36px 18px 64px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .card {
+    padding: 22px 20px;
+  }
+
+  .center-box,
+  #form-state {
+    margin: 40px auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .spinner {
+    animation: none;
+  }
 }
