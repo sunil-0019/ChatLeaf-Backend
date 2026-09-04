@@ -1,7 +1,7 @@
 // Yeh controller sirf WEBSITE ke contact-form ke liye hai (public/contact.html).
 // Android app isse kabhi use nahi karta.
 
-const nodemailer = require("nodemailer");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 const escapeHtml = (text) => {
   if (typeof text !== "string") return "";
@@ -21,23 +21,21 @@ const isValidEmail = (email) => {
 // Simple in-memory rate limiting hata diya - global express-rate-limit middleware
 // (routes me lagi hui) already isko cover karti hai, taaki duplicate logic na ho.
 
-let cachedTransporter = null;
-const getTransporter = () => {
-  if (cachedTransporter) return cachedTransporter;
-  const required = ["EMAIL_HOST", "EMAIL_PORT", "EMAIL_USER", "EMAIL_PASS"];
+let cachedApiInstance = null;
+const getApiInstance = () => {
+  if (cachedApiInstance) return cachedApiInstance;
+  const required = ["BREVO_API_KEY", "EMAIL_FROM"];
   const missing = required.filter((key) => !process.env[key]);
   if (missing.length > 0) {
     throw new Error(`Email is not configured. Missing .env values: ${missing.join(", ")}`);
   }
-  cachedTransporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT),
-    secure: Number(process.env.EMAIL_PORT) === 465,
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    connectionTimeout: 20000,
-    socketTimeout: 20000,
-  });
-  return cachedTransporter;
+
+  const defaultClient = SibApiV3Sdk.ApiClient.instance;
+  const apiKey = defaultClient.authentications["api-key"];
+  apiKey.apiKey = process.env.BREVO_API_KEY;
+
+  cachedApiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+  return cachedApiInstance;
 };
 
 // Contact-form submission: sirf TEXT fields (email, phone, message) accept karta hai.
@@ -67,7 +65,7 @@ exports.submitContactForm = async (req, res) => {
       return res.status(500).json({ success: false, message: "Contact form is temporarily unavailable. Please try again later." });
     }
 
-    const transporter = getTransporter();
+    const apiInstance = getApiInstance();
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 520px; margin: 0 auto;">
         <h2 style="color: #4C5BFF;">New ChatLeaf Contact Form Submission</h2>
@@ -81,13 +79,14 @@ exports.submitContactForm = async (req, res) => {
     `;
 
     try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM,
-        to: developerEmail,
-        replyTo: email, // developer seedha "Reply" dabake user ko jawab de sake
+      const sendSmtpEmail = {
+        sender: { email: process.env.EMAIL_FROM, name: "ChatLeaf" },
+        to: [{ email: developerEmail }],
+        replyTo: { email }, // developer seedha "Reply" dabake user ko jawab de sake
         subject: "ChatLeaf Contact Form",
-        html,
-      });
+        htmlContent: html,
+      };
+      await apiInstance.sendTransacEmail(sendSmtpEmail);
     } catch (emailError) {
       console.error("Contact form email failed:", emailError.message);
       return res.status(502).json({ success: false, message: "Could not send your message. Please try again shortly." });
