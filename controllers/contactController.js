@@ -89,6 +89,9 @@ exports.submitContactForm = async (req, res) => {
       await apiInstance.sendTransacEmail(sendSmtpEmail);
     } catch (emailError) {
       console.error("Contact form email failed:", emailError.message);
+      if (emailError.response && emailError.response.text) {
+           console.error("Brevo detailed error:", emailError.response.text);
+      }
       return res.status(502).json({ success: false, message: "Could not send your message. Please try again shortly." });
     }
 
