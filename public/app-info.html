@@ -4,77 +4,169 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>App Info — ChatLeaf</title>
+  <meta name="description" content="Everything about the ChatLeaf Android app — features, how it works, screenshots and download.">
+  <link rel="icon" href="/logo.png">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="navbar">
-    <a href="/" class="logo">
-      <span class="logo-icon"><img src="/logo.png" alt="ChatLeaf logo"></span> ChatLeaf
-    </a>
-    <nav>
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
-      <a href="/contact.html">Contact</a>
-    </nav>
-  </div>
 
-  <div class="container">
-    <h1>App Info</h1>
-    <p class="subtitle">Everything about the ChatLeaf app — features, screenshots, and how it works.</p>
-
-    <!--
-      NOTE FOR YOU (the developer): Replace the placeholder sections below with your
-      own screenshots, feature descriptions, and download links. To add an image,
-      use: <img src="/your-image.png" alt="description" style="width:100%; border-radius:12px; margin:16px 0;">
-      Just drop your image files into the /public folder and reference them by filename.
-    -->
-
-    <div class="card">
-      <h2 style="margin-top:0;">What is ChatLeaf?</h2>
-      <p>ChatLeaf is a simple, private, and secure chat application for Android.
-      It lets you connect with friends and family through fast, reliable messaging —
-      with a strong focus on account security and user privacy.</p>
-    </div>
-
-    <div class="card">
-      <h2 style="margin-top:0;">Key Features</h2>
-      <ul>
-        <li>Secure sign-up with email verification</li>
-        <li>Login with email/password or Google Sign-In</li>
-        <li>Unique, customizable User ID for finding and connecting with others</li>
-        <li>New-device login alerts for account security</li>
-        <li>Simple, clean chat experience</li>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="ChatLeaf logo">
+        ChatLeaf
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/app-info.html">App Info</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Terms</a></li>
+        <li><a href="/contact.html">Contact</a></li>
       </ul>
     </div>
+  </header>
 
-    <div class="card">
-      <h2 style="margin-top:0;">Screenshots</h2>
-      <p style="color:#9aa0ac;">
-        <!-- Replace this paragraph with your screenshots, e.g.: -->
-        <!-- <img src="/screenshot-login.png" alt="Login screen" style="width:100%; border-radius:12px; margin:8px 0;"> -->
-        Add your app screenshots here.
-      </p>
-    </div>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow-leaf">🌿 About the app</span>
+        <h1>ChatLeaf, explained from the inside out</h1>
+        <p class="lead">What ChatLeaf does, how it's built, and what to expect the first time you open it — chats, Status and groups, without any calling clutter.</p>
+      </div>
+    </section>
 
-    <div class="card">
-      <h2 style="margin-top:0;">Download</h2>
-      <p style="color:#9aa0ac;">
-        <!-- Replace with your Play Store link, e.g.: -->
-        <!-- <a href="https://play.google.com/store/apps/details?id=your.package.name" class="btn" style="display:inline-block; width:auto;">Get it on Google Play</a> -->
-        Add your download link here.
-      </p>
-    </div>
-  </div>
+    <section class="section" style="padding-top:48px;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What is ChatLeaf?</h2>
+          <p class="lead" style="max-width:70ch;">ChatLeaf is an Android messaging app built around three things: one-to-one chats, Status updates, and groups. There's no voice or video calling anywhere in the app — the entire experience is designed around text, photos and presence, kept fast and free of noise. Every account starts with a verified email and a password, and from there you're reachable only through a short, memorable ChatLeaf ID rather than a phone number.</p>
+        </div>
 
-  <div class="footer">
-    <div class="footer-links">
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms &amp; Conditions</a>
-      <a href="/contact.html">Contact Us</a>
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="icon">💬</div>
+            <h3>Chats</h3>
+            <p>Clean, fast one-to-one conversations with delivery and read ticks, so you always know where a message stands.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🌱</div>
+            <h3>Status</h3>
+            <p>Post a photo or a short update for your contacts to see — a lightweight way to share what you're up to.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">👥</div>
+            <h3>Groups</h3>
+            <p>Create a group for your circle — family, friends, teammates — and keep every reply in one thread.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🆔</div>
+            <h3>ChatLeaf ID</h3>
+            <p>A unique, editable ID that stands in for a phone number. Share it however you like, keep your number private.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🔑</div>
+            <h3>Google Sign-In</h3>
+            <p>Skip the password entirely and continue with your Google account — it links straight to the same secure profile.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🛎️</div>
+            <h3>Security alerts</h3>
+            <p>New-device logins, password changes and ID changes all trigger an email, so nothing happens on your account without you knowing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>How ChatLeaf works</h2>
+          <p class="lead">A quick look at the flow from install to your first conversation.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="num">01</span>
+            <h3>Sign up &amp; verify</h3>
+            <p>Enter your name, email and password, confirm a one-time code sent to your inbox, and your account is live.</p>
+          </div>
+          <div class="step">
+            <span class="num">02</span>
+            <h3>Set up your profile</h3>
+            <p>Add a profile photo and an About line, and choose your ChatLeaf ID — you can update it later, once a month.</p>
+          </div>
+          <div class="step">
+            <span class="num">03</span>
+            <h3>Chat, post, group up</h3>
+            <p>Message contacts directly, share a Status, or start a group — everything lives in one simple chat list.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Screenshots</h2>
+          <p class="lead">A first look at the app is on its way — screenshots will be added here shortly.</p>
+        </div>
+        <!--
+          HOW TO ADD YOUR OWN SCREENSHOTS (manual):
+          1. Drop your image files into the /public folder, e.g. /public/shot-chats.png
+          2. Replace a .shot-slot <div> below with:
+             <img src="/shot-chats.png" alt="ChatLeaf chat screen" style="border-radius:14px;">
+          3. Repeat for each screenshot. The grid (.shots) already handles spacing and
+             the mobile layout, so you don't need to change any CSS.
+        -->
+        <div class="shots">
+          <div class="shot-slot">Chats screen<br>screenshot coming soon</div>
+          <div class="shot-slot">Status screen<br>screenshot coming soon</div>
+          <div class="shot-slot">Group chat<br>screenshot coming soon</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0; padding-bottom:90px;">
+      <div class="wrap">
+        <div class="band">
+          <div>
+            <h2>Download ChatLeaf</h2>
+            <p>ChatLeaf is being prepared for the Google Play Store. The download link will appear here the moment it's live.</p>
+          </div>
+          <!-- Replace this button with a real link once published, e.g.:
+               <a href="https://play.google.com/store/apps/details?id=your.package.name" class="btn btn-primary">Get it on Google Play</a> -->
+          <button class="btn btn-ghost" aria-disabled="true" disabled>Coming soon to Google Play</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <a href="/index.html" class="footer-brand">
+          <img src="/logo.png" alt="ChatLeaf logo">
+          ChatLeaf
+        </a>
+        <p>A calm, focused chat app for the conversations that matter — built with privacy and account security at its core.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/index.html">Home</a>
+        <a href="/app-info.html">App Info</a>
+        <a href="/contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms &amp; Conditions</a>
+      </div>
     </div>
-    <p>© 2026 ChatLeaf. All rights reserved.</p>
-  </div>
+    <div class="footer-bottom">© 2026 ChatLeaf. All rights reserved.</div>
+  </footer>
+
+  <script src="/main.js"></script>
 </body>
 </html>

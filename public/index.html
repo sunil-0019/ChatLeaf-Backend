@@ -4,129 +4,197 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChatLeaf — Simple. Private. Secure.</title>
-  <meta name="description" content="ChatLeaf is a simple, private, and secure Android chat app with one-on-one chat, group chats, and Status updates.">
-  <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="description" content="ChatLeaf is a calm, private chat app for Android with chats, status updates and groups — built around real account security.">
+  <link rel="icon" href="/logo.png">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="navbar">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="ChatLeaf" class="logo-icon">
-      ChatLeaf
-    </a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
-    <nav id="site-nav">
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
-      <a href="/contact.html">Contact</a>
-    </nav>
-  </div>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="ChatLeaf logo">
+        ChatLeaf
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/app-info.html">App Info</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Terms</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
 
   <main>
-  <div class="container container--wide">
-    <span class="eyebrow">Available for Android</span>
-    <h1>Chat, groups and Status — without the clutter</h1>
-    <p class="subtitle">ChatLeaf keeps messaging simple: real-time one-on-one chats, group conversations with the
-    people who matter, and Status updates you can share with your contacts. No voice or video calls, no
-    noise — just a fast, private, focused place to talk.</p>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="hero-kicker"><img src="/logo.png" alt=""> Built for real conversations</span>
+          <h1>Chat that stays yours, from sign-up to the last message.</h1>
+          <p class="lead">ChatLeaf is a calm, focused chat app for Android. Message the people who matter, share what's on your mind with Status, and keep your groups organised — all backed by account security that actually looks out for you.</p>
+          <div class="hero-ctas">
+            <a href="/app-info.html" class="btn btn-primary">Explore the app</a>
+            <a href="/privacy.html" class="btn btn-ghost">Read our Privacy Policy</a>
+          </div>
+          <div class="hero-meta">
+            <div>
+              <strong>Chats</strong>
+              <span>One-to-one messaging</span>
+            </div>
+            <div>
+              <strong>Status</strong>
+              <span>Share the moment</span>
+            </div>
+            <div>
+              <strong>Groups</strong>
+              <span>Stay in the loop together</span>
+            </div>
+          </div>
+        </div>
 
-    <div class="hero-actions">
-      <a href="/app-info.html" class="btn btn-inline">See App Info</a>
-      <a href="/contact.html" class="btn btn-inline btn-outline">Get in Touch</a>
-    </div>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <h3>One-on-one chat</h3>
-        <p>Fast, reliable text messaging with anyone on ChatLeaf, found by their unique User ID.</p>
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <div class="phone-bar">
+              <div class="avatar">R</div>
+              <div>
+                <div class="who">Riya</div>
+                <div class="status">online</div>
+              </div>
+            </div>
+            <div class="phone-body">
+              <div class="bubble in">Hey! Are we still on for the trip this weekend?</div>
+              <div class="bubble out">Yes! Just added you to the group so everyone's synced.<span class="tick">✓✓ 9:41 AM</span></div>
+              <div class="bubble in">Perfect, sending my location once I'm out.</div>
+              <div class="bubble out">Sounds good 🌿<span class="tick">✓✓ 9:42 AM</span></div>
+            </div>
+            <div class="phone-input">Message</div>
+          </div>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">👥</div>
-        <h3>Group chats</h3>
-        <p>Create groups for family, friends, or teams and keep everyone in one conversation.</p>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Everything a chat app needs, nothing it doesn't</h2>
+          <p class="lead">ChatLeaf keeps things simple on purpose — messaging, status and groups, with no clutter and no noisy extras.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="icon">🔐</div>
+            <h3>Secure sign-up</h3>
+            <p>Every account is verified by email before it's ever created, so there's no room for throwaway or fake accounts.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🟢</div>
+            <h3>Google Sign-In</h3>
+            <p>Log in with your email and password, or continue with Google in one tap — same secure account either way.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🏷️</div>
+            <h3>Your own ChatLeaf ID</h3>
+            <p>A short, memorable ID that people use to find and add you — no phone number required, ever.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">📶</div>
+            <h3>New-device alerts</h3>
+            <p>The moment your account is opened on an unfamiliar device, you'll get an email so you can act fast.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">🌱</div>
+            <h3>Status updates</h3>
+            <p>Share a quick photo, thought or update that your contacts can see — gone again after it's had its moment.</p>
+          </div>
+          <div class="feature">
+            <div class="icon">👥</div>
+            <h3>Groups</h3>
+            <p>Bring people together in one thread for trips, teams or family — built for text, not for calls.</p>
+          </div>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🟢</div>
-        <h3>Status updates</h3>
-        <p>Share a quick photo or text update that your contacts can see, the way you'd share a story.</p>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Up and running in three steps</h2>
+          <p class="lead">No complicated setup — you're chatting within a couple of minutes.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="num">01</span>
+            <h3>Create your account</h3>
+            <p>Sign up with your name, email and a password, verify a quick code, and you're in.</p>
+          </div>
+          <div class="step">
+            <span class="num">02</span>
+            <h3>Pick your ChatLeaf ID</h3>
+            <p>Choose a short, unique ID so friends and family can find you instantly, no phone number needed.</p>
+          </div>
+          <div class="step">
+            <span class="num">03</span>
+            <h3>Start chatting</h3>
+            <p>Message one-to-one, post a Status, or start a group — all from a clean, distraction-free screen.</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2 style="margin-top:0;">Why people choose ChatLeaf</h2>
-      <p>ChatLeaf is built around messaging done well, rather than a long list of features nobody uses. Sign-up
-      and login are protected with one-time passcodes (OTP), passwords are hashed and never stored in plain
-      text, and we alert you whenever your account is opened from a new device. There's no voice or video
-      calling in ChatLeaf by design — the app stays focused on chat, groups, and Status, so it's lighter,
-      simpler, and easier to trust.</p>
-    </div>
+    <section class="section" style="padding-top:0;">
+      <div class="wrap">
+        <div class="band">
+          <div>
+            <h2>Curious what's under the hood?</h2>
+            <p>See the full feature list, screenshots and download details on the App Info page.</p>
+          </div>
+          <a href="/app-info.html" class="btn btn-ghost">Go to App Info</a>
+        </div>
+      </div>
+    </section>
 
-    <div class="card">
-      <h2 style="margin-top:0;">About this website</h2>
-      <p>This site is the public home for the ChatLeaf mobile app — it covers what the app does, our Privacy
-      Policy, our Terms &amp; Conditions, and how to reach us. Signing up, logging in, and chatting all happen
-      inside the ChatLeaf Android app itself, not on this website.</p>
-    </div>
-
-    <div class="card">
-      <h2 style="margin-top:0;">Quick links</h2>
-      <p>📄 <a href="/app-info.html">Learn more about the app</a></p>
-      <p>🔒 <a href="/privacy.html">Read our Privacy Policy</a></p>
-      <p>📜 <a href="/terms.html">Read our Terms &amp; Conditions</a></p>
-      <p>✉️ <a href="/contact.html">Get in touch with us</a></p>
-    </div>
-  </div>
+    <section class="section" style="padding-top:0; padding-bottom:90px;">
+      <div class="wrap">
+        <div class="section-head" style="margin-bottom:24px;">
+          <h2>Quick links</h2>
+        </div>
+        <div class="quick-links">
+          <a href="/app-info.html">App Info<span>Features & download</span></a>
+          <a href="/privacy.html">Privacy Policy<span>How your data is handled</span></a>
+          <a href="/terms.html">Terms &amp; Conditions<span>The rules of using ChatLeaf</span></a>
+          <a href="/contact.html">Contact Us<span>Questions & support</span></a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <div class="footer">
+  <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-brand-mark">
-          <img src="/logo.png" alt="ChatLeaf">
+      <div>
+        <a href="/index.html" class="footer-brand">
+          <img src="/logo.png" alt="ChatLeaf logo">
           ChatLeaf
-        </div>
-        <p>A simple, private, and secure chat app for Android — one-on-one chats, groups, and Status, built with
-        your privacy in mind.</p>
+        </a>
+        <p>A calm, focused chat app for the conversations that matter — built with privacy and account security at its core.</p>
       </div>
       <div class="footer-col">
-        <h3>Product</h3>
-        <a href="/">Home</a>
+        <h4>Product</h4>
+        <a href="/index.html">Home</a>
         <a href="/app-info.html">App Info</a>
+        <a href="/contact.html">Contact Us</a>
       </div>
       <div class="footer-col">
-        <h3>Legal</h3>
+        <h4>Legal</h4>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms &amp; Conditions</a>
       </div>
-      <div class="footer-col">
-        <h3>Support</h3>
-        <a href="/contact.html">Contact Us</a>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 ChatLeaf. All rights reserved.</p>
-    </div>
-  </div>
+    <div class="footer-bottom">© 2026 ChatLeaf. All rights reserved.</div>
+  </footer>
 
-  <script>
-    (function () {
-      var toggle = document.getElementById('nav-toggle');
-      var nav = document.getElementById('site-nav');
-      if (!toggle || !nav) return;
-      toggle.addEventListener('click', function () {
-        var isOpen = nav.classList.toggle('open');
-        toggle.classList.toggle('active', isOpen);
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-    })();
-  </script>
+  <script src="/main.js"></script>
 </body>
 </html>

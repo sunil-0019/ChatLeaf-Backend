@@ -4,135 +4,111 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us — ChatLeaf</title>
-  <meta name="description" content="Reach the ChatLeaf team for account help, bug reports, or general feedback.">
-  <link rel="icon" href="/logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="description" content="Get in touch with the ChatLeaf team — questions, feedback, or support.">
+  <link rel="icon" href="/logo.png">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="navbar">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="ChatLeaf" class="logo-icon">
-      ChatLeaf
-    </a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
-    <nav id="site-nav">
-      <a href="/app-info.html">App Info</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/terms.html">Terms</a>
-      <a href="/contact.html" class="active">Contact</a>
-    </nav>
-  </div>
+
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="ChatLeaf logo">
+        ChatLeaf
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/app-info.html">App Info</a></li>
+        <li><a href="/privacy.html">Privacy</a></li>
+        <li><a href="/terms.html">Terms</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
 
   <main>
-  <div class="container">
-    <span class="eyebrow">Support</span>
-    <h1>Contact Us</h1>
-    <p class="subtitle">Have a question about your account, found a bug, or just want to share feedback? Reach
-    out — we read every message and we'd love to hear from you.</p>
-
-    <div class="card">
-      <h2 style="margin-top:0;">Contact Information</h2>
-      <div class="contact-info">
-        <div class="row"><span class="icon">📞</span> <span id="contact-phone">+91 00000 00000</span></div>
-        <div class="row"><span class="icon">✉️</span> <span id="contact-email">support@chatleaf.app</span></div>
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow-leaf">🌿 We're listening</span>
+        <h1>Contact Us</h1>
+        <p class="lead">Have a question, some feedback, or a security concern? Send it over — a real person on the ChatLeaf team reads every message.</p>
       </div>
-      <p style="color:#9aa0ac; font-size:13px;">
-        <!-- NOTE FOR YOU: update the phone number and email above directly in the HTML
-        (search for "contact-phone" and "contact-email" ids). -->
-      </p>
-    </div>
+    </section>
 
-    <div class="card">
-      <h2 style="margin-top:0;">Send Us a Message</h2>
-      <p>Whether it's help recovering your account, a bug in a chat or group, or something you'd like to see in
-      a future update, tell us below and we'll get back to you at the email you provide.</p>
-      <div id="form-message" class="message-banner"></div>
-      <form id="contact-form">
-        <div class="form-group">
-          <label for="email">Your Email</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Your Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
-        </div>
-        <button type="submit" class="btn" id="submit-btn">Send Message</button>
-      </form>
-    </div>
+    <div class="read" style="max-width: 640px; margin-top: -24px;">
+      <div>
 
-    <div class="card faq">
-      <h2 style="margin-top:0;">Before you write in</h2>
-      <details>
-        <summary>I forgot my password</summary>
-        <p>Use "Forgot Password" from the ChatLeaf login screen — it sends a one-time reset link to your
-        registered email, valid for 5 minutes.</p>
-      </details>
-      <details>
-        <summary>I want to report abuse in a chat or group</summary>
-        <p>Include the User ID or group name involved along with a short description, and we'll look into it as
-        a priority.</p>
-      </details>
-      <details>
-        <summary>I want my account deleted</summary>
-        <p>Send us a message from this page and we'll confirm the details before permanently removing your
-        account and data.</p>
-      </details>
+        <div class="form-card" style="margin-bottom:20px;">
+          <h2 style="margin-top:0; font-size:19px; border-top:none; padding-top:0;">Reach us directly</h2>
+          <div class="contact-info">
+            <div class="row">
+              <span class="icon">📞</span>
+              <span id="contact-phone">+91 00000 00000</span>
+            </div>
+            <div class="row">
+              <span class="icon">✉️</span>
+              <span id="contact-email">support@chatleaf.app</span>
+            </div>
+          </div>
+          <p class="form-hint">
+            <!-- NOTE FOR YOU: update the phone number and email above directly in the HTML
+            (search for "contact-phone" and "contact-email" ids). -->
+            We typically reply within 1–2 business days.
+          </p>
+        </div>
+
+        <div class="form-card">
+          <h2 style="margin-top:0; font-size:19px; border-top:none; padding-top:0;">Send us a message</h2>
+          <div id="form-message" class="message-banner"></div>
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Your Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
   </main>
 
-  <div class="footer">
+  <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-brand-mark">
-          <img src="/logo.png" alt="ChatLeaf">
+      <div>
+        <a href="/index.html" class="footer-brand">
+          <img src="/logo.png" alt="ChatLeaf logo">
           ChatLeaf
-        </div>
-        <p>A simple, private, and secure chat app for Android — one-on-one chats, groups, and Status, built with
-        your privacy in mind.</p>
+        </a>
+        <p>A calm, focused chat app for the conversations that matter — built with privacy and account security at its core.</p>
       </div>
       <div class="footer-col">
-        <h3>Product</h3>
-        <a href="/">Home</a>
+        <h4>Product</h4>
+        <a href="/index.html">Home</a>
         <a href="/app-info.html">App Info</a>
+        <a href="/contact.html">Contact Us</a>
       </div>
       <div class="footer-col">
-        <h3>Legal</h3>
+        <h4>Legal</h4>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms &amp; Conditions</a>
       </div>
-      <div class="footer-col">
-        <h3>Support</h3>
-        <a href="/contact.html">Contact Us</a>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 ChatLeaf. All rights reserved.</p>
-    </div>
-  </div>
+    <div class="footer-bottom">© 2026 ChatLeaf. All rights reserved.</div>
+  </footer>
 
+  <script src="/main.js"></script>
   <script>
-    (function () {
-      var toggle = document.getElementById('nav-toggle');
-      var nav = document.getElementById('site-nav');
-      if (!toggle || !nav) return;
-      toggle.addEventListener('click', function () {
-        var isOpen = nav.classList.toggle('open');
-        toggle.classList.toggle('active', isOpen);
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-    })();
-
     const form = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const messageBox = document.getElementById('form-message');
