@@ -1,6 +1,33 @@
-# ChatLeaf Backend v2 (Email+Password Login, Google Login, OTP Rules)
+# ChatLeaf Backend
 
-## 1. Setup
+Backend API for **ChatLeaf**, a chat application I built from scratch — currently powering the authentication, profile management, and security layer for the Android app.
+
+## Tech Stack
+
+- **Runtime:** Node.js, Express.js
+- **Database:** MongoDB (Mongoose)
+- **Auth:** JWT (access + refresh token pattern)
+- **File Storage:** Cloudinary (profile pictures)
+- **Email:** Brevo API (OTP, welcome emails, security alerts)
+- **OAuth:** Google Sign-In
+
+## Why I Built This
+
+I wanted to go beyond tutorial-style CRUD apps and build an auth system with the kind of details real production apps need — OTP-based signup, password recovery without OTP re-use bugs, device-based security alerts, and token rotation that doesn't silently break sessions. This backend is the result of building that from the ground up and iterating on it.
+
+## Key Features
+
+- **Email + Password signup** — no password typed by the user at signup; the backend generates a secure password and emails it after OTP verification.
+- **Google Sign-In** — login and signup are handled through a single endpoint; new users are auto-created.
+- **Forgot Password (OTP-based)** — generates a new password, emails it, and logs the user in automatically. Old password is never recoverable (only stored hashed).
+- **Profile "Forgot Password" (link-based)** — a separate flow for users who are already logged in but forget their current password. Uses a secure, single-use link instead of an OTP, and never disturbs the user's existing session.
+- **JWT Access + Refresh Tokens** — 15-minute access tokens, permanent refresh tokens (until logout), with a `type` field on every token to prevent access/refresh token misuse.
+- **Device-aware security alerts** — new-device logins trigger an automatic email notification.
+- **Rate limiting & lockouts** — OTP requests capped at 5/24hr, reset-link requests capped at 2/24hr, plus IP-based rate limiting on all auth routes.
+- **Profile picture upload** — images stream directly to Cloudinary (never touch disk), only the URL is stored in MongoDB.
+- **Automatic OTP cleanup** — TTL-indexed MongoDB collection ensures no stale OTP data accumulates, while still enforcing lockout windows correctly.
+
+## Setup
 
 ```bash
 cd chatleaf-backend
@@ -8,98 +35,138 @@ npm install
 cp .env.example .env
 ```
 
-`.env` fill karo:
-- `MONGO_URI` — MongoDB Atlas connection string
-- `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET` — do alag lambe random strings
-- `EMAIL_USER`, `EMAIL_PASS` — Gmail + App Password
-- `GOOGLE_CLIENT_ID` — Google Cloud Console se (neeche steps hain)
-- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` — [cloudinary.com](https://cloudinary.com) par free account banao, Dashboard par yeh teeno mil jayenge (profile photo upload ke liye zaroori hai)
+Fill in `.env`:
+
+| Variable | Description |
+|---|---|
+| `MONGO_URI` | MongoDB Atlas connection string |
+| `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET` | Two separate long random strings |
+| `EMAIL_USER`, `EMAIL_PASS` | Gmail address + App Password |
+| `GOOGLE_CLIENT_ID` | From Google Cloud Console (see below) |
+| `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | From Cloudinary dashboard (free tier) |
 
 ```bash
 npm run dev
 ```
 
-## 2. Google Sign-In Setup (Android side)
+### Google Sign-In Setup (Android side)
 
-1. [Google Cloud Console](https://console.cloud.google.com) me project banao
-2. "APIs & Services" → "Credentials" → "Create Credentials" → "OAuth Client ID"
-3. **Do client IDs banane padenge:**
-   - Type: **Android** — apna package name aur SHA-1 fingerprint dena hoga
-   - Type: **Web application** — iska Client ID `.env` me `GOOGLE_CLIENT_ID` me daalna hai (backend isi se verify karta hai)
-4. Android app me Google Sign-In SDK use karke `idToken` lo, usko backend ke `/api/auth/google-login` pe bhejo
+1. Create a project in Google Cloud Console.
+2. Go to **APIs & Services → Credentials → Create Credentials → OAuth Client ID**.
+3. Create two client IDs:
+   - **Android** — requires your package name and SHA-1 fingerprint.
+   - **Web application** — its Client ID goes into `GOOGLE_CLIENT_ID` in `.env` (this is what the backend uses to verify tokens).
+4. On the Android side, use the Google Sign-In SDK to get an `idToken`, then send it to `/api/auth/google-login`.
 
-## 2.5. Website Setup (Terms, Privacy, Contact, App Info, Reset-Password page)
+## API Endpoints
 
-Backend `/public` folder se ek poori website bhi serve karta hai — yeh sirf **browser me kholne ke liye** hai, Android app iska use nahi karta (app sirf `/api/auth/*` JSON endpoints use karta hai).
-
-**Pages jo already ban chuki hain:**
-- `/index.html` — Homepage
-- `/terms.html` — Terms & Conditions
-- `/privacy.html` — Privacy Policy
-- `/app-info.html` — App ke baare me jaankari (screenshots/download-link daalne ke liye placeholder hai)
-- `/contact.html` — Contact form (email, phone, message) — submit hote hi tumhare `DEVELOPER_CONTACT_EMAIL` pe mail jaati hai
-- `/reset-password.html` — Password-reset link is page ko kholता hai (Settings ke "forgot password" flow ke liye, neeche section 3.5 dekho)
-
-**Tumhe khud karna hai:**
-1. `.env` me `DEVELOPER_CONTACT_EMAIL=youremail@gmail.com` daalna — contact-form ke messages yahi aayenge
-2. `.env` me `APP_BASE_URL=https://your-hosted-domain.com` daalna (jab website host kar do) — warna reset-password links request-URL se apne aap ban jayenge, lekin production me apna asli domain daalna better hai
-3. `public/app-info.html` file kholke apne screenshots/Play-Store-link daalna — file ke andar clear comments hain kaha kya daalna hai (`<img src="/your-image.png">` jaisa)
-4. `public/contact.html` file kholke apna phone number aur email update karna — `id="contact-phone"` aur `id="contact-email"` dhundo
-5. Apne screenshots/images `public/` folder me daal dena, phir unhe HTML me filename se reference kar dena
-
-**Note:** Contact form sirf text (email, phone, message) accept karta hai — photo/PDF attachment support nahi hai. Agar koi image bhejni ho, wo tumhare `DEVELOPER_CONTACT_EMAIL` pe seedha reply karke bhej sakta hai.
-
-## 3. Saare Endpoints
-
-### Signup (sirf Full Name + Email — password backend khud banata hai)
+### Signup (Full Name + Email only — password is generated by the backend)
 ```
 POST /api/auth/signup/send-otp
 Body: { "fullName": "Sunil Pal", "email": "sunil@gmail.com" }
-→ Email pe OTP jata hai. Password abhi nahi banta - yeh sirf OTP verify hone ke baad banega.
-
+```
+```
 POST /api/auth/signup/verify-otp
 Body: { "email": "sunil@gmail.com", "otp": "482170", "deviceId": "abc-123", "deviceName": "Pixel 7" }
-→ OTP sahi hote hi account create ho jata hai:
-   - Backend khud ek 12-character password generate karta hai (naam + digits + symbol)
-   - Default avatar generate hota hai — naam ka SIRF PEHLA LETTER (jaise "Sunil Pal" -> "S") + ek random background color (har user ko alag color milta hai, naam se koi lena-dena nahi, ek baar assign hone ke baad hamesha wahi rehta hai)
-   - Unique userId (jaise "sunil_4821") generate hota hai
-   - Welcome email jaati hai jisme userId + password dono hote hain
-   - Response me accessToken, refreshToken, user milta hai
-   - Agar welcome email fail ho jaye (SMTP issue), response me "temporaryPassword" field
-     bhi aata hai taaki user apna password dekh sake bina email ke
+```
+On success: a 12-character password is generated, a default avatar (first letter of name + random color) and a unique `userId` (e.g. `sunil_4821`) are created. A welcome email is sent with the `userId` and password. If the email fails to send, a `temporaryPassword` field is included in the response as a fallback.
 
+```
 POST /api/auth/signup/resend-otp
 Body: { "email": "sunil@gmail.com" }
 ```
 
-### Login (Email + Password)
+### Login
 ```
 POST /api/auth/login
 Body: { "email": "sunil@gmail.com", "password": "abc12345", "deviceId": "abc-123", "deviceName": "Pixel 7" }
-→ Email exist nahi -> "Email not exist."
-→ Password galat -> "Incorrect password."
-→ Naya device ho -> security email trigger hoti hai automatically
 ```
 
-### Google Login (login + auto-signup dono isi ek endpoint se)
+### Google Login (handles both login and signup)
 ```
 POST /api/auth/google-login
-Body: { "idToken": "<Google se mila ID token>", "deviceId": "abc-123", "deviceName": "Pixel 7" }
-→ Email pehle se hai -> seedha login (koi OTP nahi)
-→ Email nahi hai -> naya account auto-create, backend password bhi generate karta hai
-   (isse baad me simple email+password se bhi login ho sakta hai), welcome email jati hai
+Body: { "idToken": "<Google ID token>", "deviceId": "abc-123", "deviceName": "Pixel 7" }
 ```
 
-### Forgot Password → Naya Password Generate + Auto-Login
+### Forgot Password (generates a new password + auto-login)
 ```
 POST /api/auth/forgot-password/send-otp
-Body: { "email": "sunil@gmail.com" }
-→ Email exist nahi -> "Email not exist."
-
 POST /api/auth/forgot-password/verify-otp
-Body: { "email": "sunil@gmail.com", "otp": "482170", "deviceId": "abc-123", "deviceName": "Pixel 7" }
-→ OTP sahi hote hi:
-   - Ek NAYA password backend generate karta hai (purana password wapas nahi mil sakta,
+POST /api/auth/forgot-password/resend-otp
+```
+
+### Token Refresh
+```
+POST /api/auth/refresh-token
+Body: { "refreshToken": "<existing refresh token>" }
+```
+Returns a new access token only — the refresh token stays the same until logout.
+
+### Logout
+```
+POST /api/auth/logout
+Header: Authorization: Bearer <accessToken>
+```
+
+### Profile
+```
+PATCH /api/auth/profile/user-id        # change userId (30-day cooldown after first edit)
+PATCH /api/auth/profile/password       # change password (current password required)
+PATCH /api/auth/profile                # update fullName / about
+PATCH /api/auth/profile/picture        # upload profile picture (multipart, JPG/PNG/WEBP, max 5MB)
+```
+
+### Profile "Forgot Password" (link-based, session stays intact)
+```
+POST /api/auth/profile/password/request-reset-link   # max 2 requests / 24hr
+GET  /api/auth/profile/password/validate-reset-link?token=xxx
+POST /api/auth/profile/password/reset-via-link
+```
+The link is valid for 5 minutes, single-use, and race-condition-safe (only one of two simultaneous submissions can succeed).
+
+### Website Contact Form
+```
+POST /api/public/contact
+Body: { "email": "user@example.com", "phone": "+919876543210", "message": "..." }
+```
+
+## Security Design
+
+- Passwords hashed with **bcrypt** — never stored or returned as plain text.
+- Refresh tokens stored **hashed** in the database — even a DB leak doesn't expose usable tokens.
+- Every protected route verifies a token's `type` field (`access` vs `refresh`) so one token type can never be used in place of the other.
+- Rate limiting on all auth endpoints (30 requests / 15 min / IP).
+- Global error handling — every controller wrapped in try/catch, plus handlers for `unhandledRejection` and `uncaughtException`.
+- Profile picture uploads are restricted to the logged-in user's own account, validated by type and size, and streamed directly to Cloudinary (never written to disk).
+
+## Performance Notes
+
+- Gzip compression enabled on both the API and the static website.
+- Static assets cached for 1 day in the browser.
+- Non-critical notification emails (device alerts, userId/password-change confirmations) are sent in the background and don't block the API response.
+- Business-critical emails (OTP, welcome email, reset link) are awaited, since their success/failure changes what the response contains.
+- MongoDB indexes on `email`, `userId`, and `tokenHash` keep lookups fast at scale.
+- `.lean()` queries used for simple existence checks to avoid the overhead of full Mongoose documents.
+
+## Android Integration Notes
+
+- Send `deviceId` and `deviceName` on every login/signup/OTP-verify call — this is what powers new-device detection.
+- Send `accessToken` in the `Authorization: Bearer <token>` header on every protected call.
+- On a `401`, refresh the access token using `refreshToken`, then retry the original request.
+- Store `refreshToken` securely (e.g. `EncryptedSharedPreferences`).
+
+## Tech Notes / Debugging
+
+Common issue: emails not sending.
+
+- **"Email is not configured"** → a required `EMAIL_*` variable is missing from `.env`, or `.env` isn't being loaded.
+- **"Invalid login" / "535 Authentication failed"** → Gmail requires an App Password (enable 2-Step Verification, then generate one), not your regular account password.
+- **Connection timeout / certificate errors** → port `465` requires `secure: true`; port `587` requires `secure: false`.
+- Email sending includes automatic retry (2 attempts, 1s delay) to smooth over transient SMTP issues.
+
+---
+
+Built and maintained by **Sunil Pal**.
      woh sirf hashed form me store hota hai)
    - Naya password sirf EMAIL par bheja jata hai (response me kabhi nahi dikhta)
    - User turant automatically login ho jata hai (accessToken + refreshToken milta hai)
